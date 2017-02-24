@@ -1,0 +1,30 @@
+{{#wrapper-main as |wrapper|}}
+	{{wrapper.header title=headerTitle left='back' right='menu'}}
+	{{wrapper.alerter}}
+	{{#if model.footer}}
+		{{#wrapper.footer title=(t 'label.iWantTo') as |footer|}}
+			{{#each model.footer as |item|}}
+				{{footer.item data-id=item.id icon=item.icon onclick=item.action title=(t item.title)}}
+			{{/each}}
+		{{/wrapper.footer}}
+	{{/if}}
+	<section class="content wrapper flexy-item">
+		<div class="main-content scrolling">
+			{{#list-container-sublist as |list|}}
+				{{#if list.header}}
+					{{list.header label=(t 'label.repaymentPlan')}}
+				{{else}}
+					{{#each model as |group|}}
+						{{#list.itemWrapper as |itemWrapper|}}
+							{{itemWrapper.item group.key group.value}}
+
+							{{#each group.childs as |item|}}
+								{{list.item item.key item.value}}
+							{{/each}}
+						{{/list.itemWrapper}}
+					{{/each}}
+				{{/if}}
+			{{/list-container-sublist}}
+		</div>
+	</section>
+{{/wrapper-main}}

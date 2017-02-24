@@ -1,0 +1,81 @@
+{{#wrapper-main as |wrapper|}}
+	{{wrapper.header title=model.name left='back' right='menu'}}
+	{{wrapper.alerter}}
+	{{#if model.footer}}
+		{{#wrapper.footer title=(t 'label.iWantTo') as |footer|}}
+			{{#each model.footer as |item|}}
+				{{footer.item data-id=item.id icon=item.icon onclick=item.action title=(t item.title)}}
+			{{/each}}
+		{{/wrapper.footer}}
+	{{/if}}
+
+{{!-- 	            {{#list-container-sublist as |list|}}
+	                {{#if list.header}}
+	                    {{list.header label=(t 'label.repaymentPlan')}}
+	                {{/if}}
+
+	                {{#if list.item}}
+						{{#each model as |item|}}
+							{{list.item
+								key=item.key
+								value=item.value}}
+						{{/each}}
+					{{/if}}
+				{{/list-container-sublist}} --}}
+
+
+ 	<section class="content wrapper flexy-item">
+		<header class="accesible-hide">
+			<h2>model.name</h2>{{! @TODO accesibilidad }}
+		</header>
+
+		<div class="item-space no-margin main-content scrolling">
+			{{#if model.operativeHeader}}
+				{{#panel-product
+					icon=model.icon
+					image=model.image
+					description=(obfuscate-iban model.iban)
+					showMoreInfo=model.showMoreInfo
+					ariaDescription=model.ariaDescription
+					ariaShowMoreInfo=model.ariaShowMoreInfo
+					as |panel|}}
+					{{#if panel.alignRight}}
+						{{#panel.alignRight
+							title=model.title
+							highlightTitle=model.highlightTitle
+							subtitle=model.subtitle
+							as |alignRight|}}
+							{{#if alignRight.titleValue}}
+								{{format-money model.availableBalance currency=model.currency}}
+							{{else if alignRight.subtitleValue}}
+								{{model.formatCurrentBalance}}
+							{{/if}}
+						{{/panel.alignRight}}
+					{{/if}}
+
+					{{#if panel.item}}
+						{{#each model.panelList as |item|}}
+							{{panel.item (t item.label) item.value item.boldLabel}}
+						{{/each}}
+					{{/if}}
+				{{/panel-product}}
+			{{/if}}
+
+			{{#each model.listWithHeader as |listHeader|}}
+					{{#list-container-row as |list|}}
+						{{#if list.header}}
+							{{#if listHeader.header}}
+								{{list.header label=listHeader.header amount=listHeader.amount isLink=listHeader.isLink}}
+							{{/if}}
+						{{/if}}
+
+						{{#if list.item}}
+							{{#each listHeader.item as |item|}}
+									{{list.item item.label item.value parentClass=true}}
+							{{/each}}
+						{{/if}}
+					{{/list-container-row}}
+			{{/each}}
+		</div>
+	</section>
+{{/wrapper-main}}
